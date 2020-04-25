@@ -32,6 +32,17 @@ services:
       - zookeeper
     networks:
       - int-net
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+
   handler:
     image: 'handler'
     depends_on:
@@ -48,3 +59,4 @@ volumes:
     driver: local
   kafka_data:
     driver: local
+  mongodb_data:
