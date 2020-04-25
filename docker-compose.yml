@@ -32,6 +32,16 @@ services:
       - zookeeper
     networks:
       - int-net
+  handler:
+    image: 'handler'
+    depends_on:
+      - kafka
+    links:
+      - kafka:kafka
+    ports:
+      - '8088:8088'
+    networks:
+      - int-net
 
 volumes:
   zookeeper_data:
