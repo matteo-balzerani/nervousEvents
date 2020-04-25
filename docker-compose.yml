@@ -43,6 +43,13 @@ services:
     volumes:
       - mongodb_data:/data/db
 
+  mocked_subscribed:
+    image: 'mockedsubscriber'
+    ports:
+      - '1666:5000'
+    networks:
+      - int-net 
+
   handler:
     image: 'handler'
     depends_on:
