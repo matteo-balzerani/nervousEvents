@@ -67,9 +67,21 @@ services:
       - kafka:kafka
       - mongodb:mongodb
     environment:
-    - MONGODB_URI=mongodb://mongodb/unreaded
+     - MONGODB_URI=mongodb://mongodb/unreaded
     ports:
       - '8089:8089'
+    networks:
+      - int-net
+  reader:
+    image: 'reader'
+    depends_on:
+      - mongodb
+    links:
+      - mongodb:mongodb
+    environment:
+     - MONGODB_URI=mongodb://mongodb/unreaded
+    ports:
+      - '8090'
     networks:
       - int-net
 
