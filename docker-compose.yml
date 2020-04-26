@@ -32,15 +32,14 @@ services:
       - zookeeper
     networks:
       - int-net
-
   mongodb:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_DATABASE: unreaded
+    image: mongo:latest 
     ports:
       - 27017:27017
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - int-net
 
   mocked_subscribed:
     image: 'mockedsubscriber'
@@ -59,6 +58,20 @@ services:
       - '8088:8088'
     networks:
       - int-net
+  sender:
+    image: 'sender'
+    depends_on:
+      - mongodb
+      - kafka
+    links:
+      - kafka:kafka
+      - mongodb:mongodb
+    environment:
+    - MONGODB_URI=mongodb://mongodb/unreaded
+    ports:
+      - '8089:8089'
+    networks:
+      - int-net
 
 volumes:
   zookeeper_data:
@@ -66,3 +79,4 @@ volumes:
   kafka_data:
     driver: local
   mongodb_data:
+    driver: local
