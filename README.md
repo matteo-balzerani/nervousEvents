@@ -3,7 +3,7 @@
 
 This MVP wants to show one approach to the problem showed and a flexible solution is presented and builded.
 
-The solution is composed by 5 different micro services, 1 publish-subscribe system (kafka) and 1 database (mongoDB)
+The solution is composed by 4 different micro services, 1 publish-subscribe system (kafka) and 1 database (mongoDB)
 The follow image can explain, from a general perspective, how those services are related and how the message-flow is managed.
 
 ![general overview](https://raw.githubusercontent.com/matteo-balzerani/nervousEvents/master/arch-mvp.png)
@@ -44,7 +44,7 @@ The consumer is not optimized for hundreds of topics or thousand of messages per
 4. ### [MongoDB](https://www.mongodb.com/)
 this database is used to store 2 different collections:
 * Subscriber : handle all the subscribers to a topic. 
-* Messages : every no-consumed message is store with the not available subscriber related.
+* Messages : every no-consumed message is store with the related not available subscriber.
 
 5. ### [ReaderFailedMessageService](https://github.com/matteo-balzerani/ReaderFailedMessageService)
 
@@ -70,11 +70,11 @@ Also this service use a random number to decide it the response will be 201 (80%
 
 ## Aggregation
 All the service are dockerized and in this MVP they can be used together using the docker-compose file in this repo.
-A better orchestrator can be chosen (i.e. K8s) but in order to create this proof-of-content the compose is enough. Also the orchestration is (with the configurations) a topic coupled to the business and the scope of the all the system
+A better orchestrator can be chosen (i.e. K8s) but in order to create this proof-of-concept the compose is enough. Also the orchestration is (with the configurations) a topic coupled to the business and the scope of the all the system
 
 ## Tech note:
 * All the services are builded as a SpringBoot application. this allow a fast development and a simple basic configuration. 
 * Java 8 is used in all the services.
-* Security is not used in all the system (MVP don't need it)
-* Tests are not yet implemented due to fast development and also because they are not mandatory from a proof-of-content perspective.
-* The mockedSubscriber is builded as a flask service in python3
+* Security is not used in all the system (this MVP don't need it)
+* Tests are not yet implemented due to fast development and also because they are not mandatory from a proof-of-concept perspective.
+* The mockedSubscriber is builded as a flask web service in python3
