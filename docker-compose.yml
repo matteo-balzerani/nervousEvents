@@ -48,6 +48,13 @@ services:
     networks:
       - int-net 
 
+  mocked_second_subscribed:
+    image: 'mockedsubscriber'
+    ports:
+      - '1667:5000'
+    networks:
+      - int-net 
+
   handler:
     image: 'handler'
     depends_on:
@@ -84,6 +91,19 @@ services:
       - '8090'
     networks:
       - int-net
+  restapi:
+    image: 'restapi'
+    depends_on:
+      - mongodb
+    links:
+      - mongodb:mongodb
+    environment:
+     - MONGODB_URI=mongodb://mongodb/unreaded
+    ports:
+      - '8081:8081'
+    networks:
+      - int-net
+
 
 volumes:
   zookeeper_data:
