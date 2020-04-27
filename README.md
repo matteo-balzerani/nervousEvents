@@ -6,6 +6,15 @@ This MVP wants to show one approach to the problem showed and a flexible solutio
 The solution is composed by 5 different micro services, 1 publish-subscribe system (kafka) and 1 database (mongoDB)
 The follow image can explain, from a general perspective, how those services are related and how the message-flow is managed.
 
+![general overview](https://raw.githubusercontent.com/matteo-balzerani/nervousEvents/master/arch-mvp.png)
+
+In short:
+A publisher uses an api interface to send a message throw Kafka. 
+The message is sent (almost in real-time) to every subscriber registered.
+If a subscriber cannot receive the message, mongoDB is used to store the unread messages.
+Two schedulers will try to resent the unread messages to the proper subscribers.
+A rest api interface is configured to allow the subscribers registration and to retrieve on-demand the unread messages.
+
 ## List of services
 1. ### [HandlerMessageService](https://github.com/matteo-balzerani/HandlerMessageService)
 This service is used as an entry point. 
